@@ -9,14 +9,14 @@ def seed():
     # Samples of planters that could be added
     planters = [
         Planter(
-            name="Alice Green",
+            name="Community Green Initiative",
             location="Nakuru",
-            contact_info="0712345678",
-            plant_type="Flowers",
-            experience_level="Beginner",
-            experience_months=2,
-            farm_size="Garden",
-            preferred_tools="Trowel, Pruners",
+            contact_info="Community Green Initiative",
+            plant_type="Trees",
+            experience_level="Intermediate",
+            experience_months=15,
+            farm_size="Large forest",
+            preferred_tools="Chainsaw, Shovel",
             created_at=datetime.now()
         ),
         Planter(
