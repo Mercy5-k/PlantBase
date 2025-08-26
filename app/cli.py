@@ -11,14 +11,16 @@ def main_menu():
 
     while True:
         # Display menu options to the user
-        print("\n🌳 PlantBase Main Menu")
-        print("➕ 1. Add Planter")
-        print("📋 2. View Planters")
-        print("🚪 3. Exit")
+         print("\n🌳 PlantBase Main Menu")
+         print("1. Add Planter")
+         print("2. View All Planters")
+         print("3. Update a Planter")
+         print("4. Delete a Planter")
+         print("0. Exit")
 
-        choice = input("Select an option: ")
+         choice = input("Select an option: ")
 
-        if choice == "1":
+         if choice == "1":
             # Collect planter details from the user
             name = input("Enter planter name: ")
             location = input("Enter planter location: ")
@@ -46,7 +48,7 @@ def main_menu():
 
             print(f"✅ Planter {name} was added successfully!")
 
-        elif choice == "2":
+         elif choice == "2":
             # Retrieve all planters from the database
             planters = session.query(Planter).all()
 
@@ -64,7 +66,7 @@ def main_menu():
                     ]
             for p in planters
                  ]
-                 print("\n🌿  List of Planters:")
+                 print("\n🌿 List of Planters:")
                  print(tabulate(
                     table,
                     headers=[
@@ -73,15 +75,57 @@ def main_menu():
                     ],
                     tablefmt="fancy_grid"
                 ))
+                 
+         elif choice == "3":
+            planter_id = int(input("Enter the ID of the planter to update: "))
+            planter = Planter.get_by_id(planter_id)
+            if planter:
+                print(f"Editing {planter.name}. Leave field empty to keep current value.")
+                name = input(f"Name [{planter.name}]: ") or planter.name
+                location = input(f"Location [{planter.location}]: ") or planter.location
+                contact_info = input(f"Contact [{planter.contact_info}]: ") or planter.contact_info
+                plant_type = input(f"Plant Type [{planter.plant_type}]: ") or planter.plant_type
+                experience_level = input(f"Experience Level [{planter.experience_level}]: ") or planter.experience_level
+                experience_months = input(f"Experience Months [{planter.experience_months}]: ") or planter.experience_months
+                farm_size = input(f"Farm Size [{planter.farm_size}]: ") or planter.farm_size
+                preferred_tools = input(f"Preferred Tools [{planter.preferred_tools}]: ") or planter.preferred_tools
 
-        elif choice == "3":
-            print("👋 Exiting PlantBase. Goodbye!")
+                # Convert experience_months to int only if it's a string
+                if isinstance(experience_months, str):
+                    experience_months_value = int(experience_months)
+                else:
+                    experience_months_value = experience_months
+
+                planter.update(
+                    name=name,
+                    location=location,
+                    contact_info=contact_info,
+                    plant_type=plant_type,
+                    experience_level=experience_level,
+                    experience_months=experience_months_value,
+                    farm_size=farm_size,
+                    preferred_tools=preferred_tools
+                )
+                print(f"✅ Planter {planter.name} was updated successfully!")
+            else:
+                print("❌ Planter not found.")
+
+         elif choice == "4":
+            planter_id = int(input("Enter the ID of the planter to delete: "))
+            planter = Planter.get_by_id(planter_id)
+            if planter:
+                planter.delete()
+                print(f"🗑️ Planter {planter.name} was deleted successfully!")
+            else:
+                print("❌ Planter not found.")
+
+         elif choice == "0":
+            print("Exiting PlantBase.👋 Goodbye!")
             break
 
-        else:
+         else:
             # Handle invalid input
             print("❌ Invalid choice. Please try again.")
-
 
 if __name__ == "__main__":
     main_menu()
