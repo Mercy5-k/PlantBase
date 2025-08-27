@@ -84,8 +84,14 @@ def main_menu():
                 ))
 
         elif choice == "3":
-            planter_id = int(input("Enter the ID of the planter to update: "))
+            planter_id_input = input("Enter the ID of the planter to update: ").strip()
+            if not planter_id_input.isdigit():
+                print("❌ Invalid input. Please enter a valid numeric ID.")
+                continue
+
+            planter_id = int(planter_id_input)
             planter = Planter.get_by_id(planter_id)
+
             if planter:
                 print(f"Editing {planter.name}. Leave field empty to keep current value.")
                 name = input(f"Name [{planter.name}]: ") or planter.name
@@ -93,12 +99,14 @@ def main_menu():
                 contact_info = input(f"Contact [{planter.contact_info}]: ") or planter.contact_info
                 plant_type = input(f"Plant Type [{planter.plant_type}]: ") or planter.plant_type
                 experience_level = input(f"Experience Level [{planter.experience_level}]: ") or planter.experience_level
-                experience_months = input(f"Experience Months [{planter.experience_months}]: ") or planter.experience_months
+                experience_months_input = input(f"Experience Months [{planter.experience_months}]: ") or str(planter.experience_months)
                 farm_size = input(f"Farm Size [{planter.farm_size}]: ") or planter.farm_size
                 preferred_tools = input(f"Preferred Tools [{planter.preferred_tools}]: ") or planter.preferred_tools
 
-                if isinstance(experience_months, str):
-                    experience_months = int(experience_months)
+                try:
+                    experience_months_value = int(experience_months_input)
+                except ValueError:
+                    experience_months_value = planter.experience_months
 
                 planter.update(
                     name=name,
@@ -106,7 +114,7 @@ def main_menu():
                     contact_info=contact_info,
                     plant_type=plant_type,
                     experience_level=experience_level,
-                    experience_months=experience_months,
+                    experience_months=experience_months_value,
                     farm_size=farm_size,
                     preferred_tools=preferred_tools
                 )
@@ -115,8 +123,14 @@ def main_menu():
                 print("❌ Planter not found.")
 
         elif choice == "4":
-            planter_id = int(input("Enter the ID of the planter to delete: "))
+            planter_id_input =input("Enter the ID of the planter to delete: ").strip()
+            if not planter_id_input.isdigit():
+                print("❌ Invalid input. Please enter a valid numeric ID.")
+                continue
+
+            planter_id = int(planter_id_input)
             planter = Planter.get_by_id(planter_id)
+
             if planter:
                 planter.delete()
                 print(f"🗑️ Planter {planter.name} was deleted successfully!")
