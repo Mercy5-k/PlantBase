@@ -11,7 +11,7 @@ def seed():
         Planter(
             name="Community Green Initiative",
             location="Nakuru",
-            contact_info="Community Green Initiative",
+            contact_info="community.intiative@gmail.com",
             plant_type="Trees",
             experience_level="Intermediate",
             experience_months=15,
