@@ -1,7 +1,12 @@
 """CLI application for managing planters in PlantBase."""
 from tabulate import tabulate
+import textwrap
 from models.base import session, Base, engine
 from models.planter import Planter
+
+def wrap_text(text, width=15):
+    """Wrapping text to a specified width for better display in tables."""
+    return textwrap.fill(str(text), width=width)
 
 def main_menu():
     """Main loop for the CLI application."""
@@ -11,16 +16,16 @@ def main_menu():
 
     while True:
         # Display menu options to the user
-         print("\n🌳 PlantBase Main Menu")
-         print("1. Add Planter")
-         print("2. View All Planters")
-         print("3. Update a Planter")
-         print("4. Delete a Planter")
-         print("0. Exit")
+        print("\n🌳 PlantBase Main Menu")
+        print("1. Add Planter")
+        print("2. View All Planters")
+        print("3. Update a Planter")
+        print("4. Delete a Planter")
+        print("0. Exit")
 
-         choice = input("Select an option: ")
+        choice = input("Select an option: ")
 
-         if choice == "1":
+        if choice == "1":
             # Collect planter details from the user
             name = input("Enter planter name: ")
             location = input("Enter planter location: ")
@@ -41,42 +46,44 @@ def main_menu():
                 experience_months=experience_months,
                 farm_size=farm_size,
                 preferred_tools=preferred_tools,
-                )
-            
+            )
             session.add(new_planter)
             session.commit()
-
             print(f"✅ Planter {name} was added successfully!")
 
-         elif choice == "2":
+        elif choice == "2":
             # Retrieve all planters from the database
             planters = session.query(Planter).all()
-
-            # Loop that prints each planter one by one
             if not planters:
                 print("📭 No planters found yet")
             else:
-                 table = [
-                    [
-                        p.id, p.name, p.location, p.contact_info,
-                        p.plant_type, p.experience_level,
+                table_data = []
+                for p in planters:
+                    row = [
+                        p.id,
+                        wrap_text(p.name),
+                        wrap_text(p.location),
+                        wrap_text(p.contact_info),
+                        wrap_text(p.plant_type),
+                        wrap_text(p.experience_level),
                         f"{p.experience_months} months",
-                        p.farm_size, p.preferred_tools,
+                        wrap_text(p.farm_size),
+                        wrap_text(p.preferred_tools, width=25),
                         p.created_at.strftime("%Y-%m-%d %H:%M")
                     ]
-            for p in planters
-                 ]
-                 print("\n🌿 List of Planters:")
-                 print(tabulate(
-                    table,
+                    table_data.append(row)
+
+                print("\n🌿 List of Planters:")
+                print(tabulate(
+                    table_data,
                     headers=[
                         "ID", "Name", "Location", "Contact", "Plant Type",
                         "Exp Level", "Exp Time", "Farm Size", "Tools", "Created At"
                     ],
                     tablefmt="fancy_grid"
                 ))
-                 
-         elif choice == "3":
+
+        elif choice == "3":
             planter_id = int(input("Enter the ID of the planter to update: "))
             planter = Planter.get_by_id(planter_id)
             if planter:
@@ -90,11 +97,8 @@ def main_menu():
                 farm_size = input(f"Farm Size [{planter.farm_size}]: ") or planter.farm_size
                 preferred_tools = input(f"Preferred Tools [{planter.preferred_tools}]: ") or planter.preferred_tools
 
-                # Convert experience_months to int only if it's a string
                 if isinstance(experience_months, str):
-                    experience_months_value = int(experience_months)
-                else:
-                    experience_months_value = experience_months
+                    experience_months = int(experience_months)
 
                 planter.update(
                     name=name,
@@ -102,7 +106,7 @@ def main_menu():
                     contact_info=contact_info,
                     plant_type=plant_type,
                     experience_level=experience_level,
-                    experience_months=experience_months_value,
+                    experience_months=experience_months,
                     farm_size=farm_size,
                     preferred_tools=preferred_tools
                 )
@@ -110,7 +114,7 @@ def main_menu():
             else:
                 print("❌ Planter not found.")
 
-         elif choice == "4":
+        elif choice == "4":
             planter_id = int(input("Enter the ID of the planter to delete: "))
             planter = Planter.get_by_id(planter_id)
             if planter:
@@ -119,13 +123,11 @@ def main_menu():
             else:
                 print("❌ Planter not found.")
 
-         elif choice == "0":
-            print("Exiting PlantBase.👋 Goodbye!")
+        elif choice == "0":
+            print("👋 Exiting PlantBase. Goodbye!")
             break
-
-         else:
-            # Handle invalid input
-            print("❌ Invalid choice. Please try again.")
+        else:
+            print("❌ Invalid option. Please try again.")
 
 if __name__ == "__main__":
     main_menu()
