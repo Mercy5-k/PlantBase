@@ -11,10 +11,8 @@ class Planter(Base):
     location = Column(String)
     contact_info = Column(String)
     plant_type = Column(String)
-    experience_level = Column(String)
     experience_months = Column(Integer)
     farm_size = Column(String)
-    preferred_tools = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     site_id = Column(Integer, ForeignKey("sites.id"), nullable=True)
