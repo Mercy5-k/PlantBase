@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from .base import Base, session  # Make sure session is imported if you want default session usage
+from .base import Base, session
 
 class Activity(Base):
     __tablename__ = "activities"
@@ -15,8 +15,6 @@ class Activity(Base):
 
     def __repr__(self):
         return f"<Activity(id={self.id}, description='{self.description}', plant_id={self.plant_id}, timestamp={self.timestamp})>"
-
-    # ======== CRUD Methods ========
 
     @classmethod
     def create(cls, session, description, plant_id):
