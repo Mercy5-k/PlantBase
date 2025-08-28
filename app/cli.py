@@ -9,10 +9,7 @@ from models.harvest import Harvest
 from models.activity import Activity
 from utils.helper import wrap_text
 
-# ------------------------------
 # Helper functions
-# ------------------------------
-
 def safe_input(prompt, type_=int):
     """Get validated input of given type."""
     while True:
@@ -25,18 +22,12 @@ def confirm_action(message):
     """Confirm before performing a destructive action."""
     return input(f"{message} (y/n): ").strip().lower() == "y"
 
-# ------------------------------
 # Greeting
-# ------------------------------
-
 def greet():
     print("\n🌱 Welcome to PlantBase CLI 🌱")
     print("Manage your plants, planters, sites, harvests, and activities easily!\n")
 
-# ------------------------------
 # Main Menu
-# ------------------------------
-
 def main_menu():
     greet()
     while True:
@@ -66,10 +57,7 @@ def main_menu():
         else:
             print("❌ Invalid choice, try again.")
 
-# ------------------------------
 # Planter Menu
-# ------------------------------
-
 def planter_menu():
     while True:
         print("\n👨‍🌾 Planter Menu")
@@ -86,20 +74,16 @@ def planter_menu():
             location = input("Enter planter location: ")
             contact = input("Enter contact info: ")
             plant_type = input("Enter plant type (crops/flowers/trees): ")
-            experience_level = input("Enter experience level: ")
             experience_months = safe_input("Enter experience in months: ", int)
             farm_size = input("Enter farm size (e.g. '4 acres'): ")
-            preferred_tools = input("Enter preferred tools (comma-separated): ")
 
             new_planter = Planter(
                 name=name,
                 location=location,
                 contact_info=contact,
                 plant_type=plant_type,
-                experience_level=experience_level,
                 experience_months=experience_months,
                 farm_size=farm_size,
-                preferred_tools=preferred_tools,
             )
             session.add(new_planter)
             session.commit()
@@ -112,13 +96,11 @@ def planter_menu():
             else:
                 table = [[
                     p.id, wrap_text(p.name), wrap_text(p.location),
-                    wrap_text(p.contact_info), p.plant_type, p.experience_level,
-                    f"{p.experience_months} months", wrap_text(p.farm_size),
-                    wrap_text(p.preferred_tools, 20), p.created_at.strftime("%Y-%m-%d")
+                    wrap_text(p.contact_info), p.plant_type, f"{p.experience_months} months", 
+                    wrap_text(p.farm_size), p.created_at.strftime("%Y-%m-%d")
                 ] for p in planters]
                 print(tabulate(table, headers=["ID", "Name", "Location", "Contact",
-                                               "Type", "Exp Level", "Exp",
-                                               "Farm Size", "Tools", "Created"],
+                                               "Type", "Exp", "Farm Size", "Created"],              
                                tablefmt="fancy_grid"))
 
         elif choice == "3":
@@ -148,10 +130,7 @@ def planter_menu():
         else:
             print("❌ Invalid choice.")
 
-# ------------------------------
 # Plant Menu
-# ------------------------------
-
 def plant_menu():
     while True:
         print("\n🌿 Plant Menu")
@@ -218,10 +197,7 @@ def plant_menu():
         else:
             print("❌ Invalid choice.")
 
-# ------------------------------
 # Site Menu
-# ------------------------------
-
 def site_menu():
     while True:
         print("\n📍 Site Menu")
@@ -280,10 +256,7 @@ def site_menu():
         else:
             print("❌ Invalid choice.")
 
-# ------------------------------
 # Harvest Menu
-# ------------------------------
-
 def harvest_menu():
     while True:
         print("\n🌾 Harvest Menu")
@@ -363,10 +336,7 @@ def harvest_menu():
         else:
             print("❌ Invalid choice.")
 
-# ------------------------------
 # Activity Menu
-# ------------------------------
-
 def activity_menu():
     while True:
         print("\n📝 Activity Menu")
@@ -434,9 +404,6 @@ def activity_menu():
         else:
             print("❌ Invalid choice. Try again.")
 
-# ------------------------------
 # Run CLI
-# ------------------------------
-
 if __name__ == "__main__":
     main_menu()
