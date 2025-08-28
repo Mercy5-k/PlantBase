@@ -21,10 +21,6 @@ class Harvest(Base):
             f"quantity={self.quantity}, unit='{self.unit}', date={self.date})>"
         )
 
-    # -----------------------------
-    # Class methods for CRUD
-    # -----------------------------
-
     @classmethod
     def create(cls, plant_id, quantity, unit="kg", date=None):
         """Create a new Harvest record."""
@@ -48,10 +44,7 @@ class Harvest(Base):
         """Get a harvest by its ID."""
         return session.get(cls, harvest_id)
 
-    # -----------------------------
     # Instance methods for update/delete
-    # -----------------------------
-
     def update(self, quantity=None, unit=None, date=None):
         """Update harvest details."""
         if quantity is not None:
