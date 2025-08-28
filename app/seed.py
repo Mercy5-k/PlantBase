@@ -1,4 +1,3 @@
-# app/seed.py
 from models.base import Base, engine, session
 from models.site import Site
 from models.planter import Planter
@@ -7,7 +6,6 @@ from models.harvest import Harvest
 from models.activity import Activity
 import datetime 
 
-# Reset database
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
@@ -27,111 +25,91 @@ planters = [
     Planter(
         name="Kamau Mwangi",
         location="Trans-Nzoia",
-        contact_info="kamau@example.com",
+        contact_info="0723763523",
         plant_type="Crops",
-        experience_level="Expert",
         experience_months=144,
         farm_size="10 acres",
-        preferred_tools="Hoe, Rake",
         site_id=sites[0].id
     ),
     Planter(
         name="Omondi Onyango",
         location="Trans-Nzoia",
-        contact_info="omondi@example.com",
+        contact_info="0789763433",
         plant_type="Crops",
-        experience_level="Intermediate",
         experience_months=96,
         farm_size="8 acres",
-        preferred_tools="Spade, Watering Can",
         site_id=sites[0].id
     ),
     Planter(
         name="Achieng Otieno",
         location="Kericho",
-        contact_info="achieng@example.com",
+        contact_info="achien4@gmail.com",
         plant_type="Tea",
-        experience_level="Advanced",
         experience_months=120,
         farm_size="15 acres",
-        preferred_tools="Pruner, Sprayer",
         site_id=sites[1].id
     ),
     Planter(
         name="Kiprotich Sang",
         location="Kericho",
-        contact_info="kiprotich@example.com",
+        contact_info="0745678909",
         plant_type="Tea",
-        experience_level="Intermediate",
         experience_months=72,
         farm_size="12 acres",
-        preferred_tools="Pruner, Hoe",
         site_id=sites[1].id
     ),
     Planter(
         name="Mwea Irrigation Cooperative Society",
         location="Kirinyaga",
-        contact_info="mwea@example.com",
+        contact_info="mwea@coop@gmail.com",
         plant_type="Rice",
-        experience_level="Expert",
         experience_months=240,
         farm_size="300 acres",
-        preferred_tools="Irrigation Pumps, Spade",
         site_id=sites[2].id
     ),
     Planter(
         name="Naivasha Flower Growers Association",
         location="Naivasha",
-        contact_info="naivasha@example.com",
+        contact_info="0790996513",
         plant_type="Flowers",
-        experience_level="Advanced",
         experience_months=180,
         farm_size="25 acres",
-        preferred_tools="Pruner, Greenhouse Tools",
         site_id=sites[3].id
     ),
     Planter(
         name="Meru Macadamia Farmers Union",
         location="Meru",
-        contact_info="meru@example.com",
+        contact_info="0771225677",
         plant_type="Macadamia",
-        experience_level="Expert",
         experience_months=216,
         farm_size="50 acres",
-        preferred_tools="Harvester, Pruner",
         site_id=sites[4].id
     ),
     Planter(
         name="St. Mary’s Secondary School Agriculture Club",
         location="Kirinyaga",
-        contact_info="stmary@example.com",
+        contact_info="0763312010",
         plant_type="Vegetables",
-        experience_level="Beginner",
         experience_months=48,
         farm_size="2 acres",
-        preferred_tools="Hoe, Rake",
         site_id=sites[2].id
     ),
     Planter(
         name="ACK St. Paul’s Church Farm",
         location="Trans-Nzoia",
-        contact_info="ackstpaul@example.com",
+        contact_info="0722334455",
         plant_type="Crops",
-        experience_level="Intermediate",
         experience_months=108,
         farm_size="20 acres",
-        preferred_tools="Spade, Sprayer",
         site_id=sites[0].id
     ),
     Planter(
         name="Green Kenya NGO",
         location="Naivasha",
-        contact_info="greenkenya@example.com",
+        contact_info="greenkenya@gmail.com",
         plant_type="Vegetables",
-        experience_level="Advanced",
         experience_months=132,
         farm_size="15 acres",
-        preferred_tools="Greenhouse Tools, Hoe",
         site_id=sites[3].id
     ),
 ]
@@ -141,21 +119,22 @@ session.commit()
 
 # Seed Plants 
 plants = [
-    Plant(name="Hybrid Maize H614", species="Maize", age_months=4, site_id=sites[0].id, planter_id=planters[0].id),
-    Plant(name="Grevillea Tree", species="Tree", age_months=36, site_id=sites[0].id, planter_id=planters[0].id),
-    Plant(name="Rosecoco Beans", species="Beans", age_months=3, site_id=sites[0].id, planter_id=planters[1].id),
-    Plant(name="Eucalyptus Trees", species="Tree", age_months=48, site_id=sites[0].id, planter_id=planters[8].id),
-    Plant(name="Purple Tea", species="Tea", age_months=18, site_id=sites[1].id, planter_id=planters[2].id),
-    Plant(name="Hass Avocado", species="Fruit", age_months=24, site_id=sites[1].id, planter_id=planters[2].id),
-    Plant(name="Arabica Coffee", species="Coffee", age_months=20, site_id=sites[1].id, planter_id=planters[3].id),
-    Plant(name="Pishori Rice", species="Rice", age_months=6, site_id=sites[2].id, planter_id=planters[4].id),
-    Plant(name="Kilele F1 Tomatoes", species="Vegetable", age_months=2, site_id=sites[2].id, planter_id=planters[4].id),
-    Plant(name="Ngombe Bananas", species="Fruit", age_months=14, site_id=sites[2].id, planter_id=planters[7].id),
-    Plant(name="Red Roses", species="Flower", age_months=3, site_id=sites[3].id, planter_id=planters[5].id),
-    Plant(name="Cucumbers", species="Vegetable", age_months=1, site_id=sites[3].id, planter_id=planters[9].id),
-    Plant(name="Macadamia Trees", species="Tree", age_months=60, site_id=sites[4].id, planter_id=planters[6].id),
-    Plant(name="Robusta Coffee", species="Coffee", age_months=30, site_id=sites[4].id, planter_id=planters[6].id),
+    Plant(name="Hybrid Maize H614", species="Maize", age_months=4, health_status="Healthy", site_id=sites[0].id, planter_id=planters[0].id),
+    Plant(name="Grevillea Tree", species="Tree", age_months=36, health_status="Healthy", site_id=sites[0].id, planter_id=planters[0].id),
+    Plant(name="Rosecoco Beans", species="Beans", age_months=3, health_status="Pest Infested", site_id=sites[0].id, planter_id=planters[1].id),
+    Plant(name="Eucalyptus Trees", species="Tree", age_months=48, health_status="Healthy", site_id=sites[0].id, planter_id=planters[8].id),
+    Plant(name="Purple Tea", species="Tea", age_months=18, health_status="Needs Water", site_id=sites[1].id, planter_id=planters[2].id),
+    Plant(name="Hass Avocado", species="Fruit", age_months=24, health_status="Healthy", site_id=sites[1].id, planter_id=planters[2].id),
+    Plant(name="Arabica Coffee", species="Coffee", age_months=20, health_status="Diseased", site_id=sites[1].id, planter_id=planters[3].id),
+    Plant(name="Pishori Rice", species="Rice", age_months=6, health_status="Healthy", site_id=sites[2].id, planter_id=planters[4].id),
+    Plant(name="Kilele F1 Tomatoes", species="Vegetable", age_months=2, health_status="Needs Water", site_id=sites[2].id, planter_id=planters[4].id),
+    Plant(name="Ngombe Bananas", species="Fruit", age_months=14, health_status="Healthy", site_id=sites[2].id, planter_id=planters[7].id),
+    Plant(name="Red Roses", species="Flower", age_months=3, health_status="Healthy", site_id=sites[3].id, planter_id=planters[5].id),
+    Plant(name="Cucumbers", species="Vegetable", age_months=1, health_status="Pest Infested", site_id=sites[3].id, planter_id=planters[9].id),
+    Plant(name="Macadamia Trees", species="Tree", age_months=60, health_status="Healthy", site_id=sites[4].id, planter_id=planters[6].id),
+    Plant(name="Robusta Coffee", species="Coffee", age_months=30, health_status="Needs Water", site_id=sites[4].id, planter_id=planters[6].id),
 ]
+
 session.add_all(plants)
 session.commit()
 
