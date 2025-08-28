@@ -1,5 +1,9 @@
-from .base import Base, engine
+from .base import Base, engine, session
+from .site import Site
 from .planter import Planter
+from .plant import Plant
+from .harvest import Harvest
+from .activity import Activity
 
-# Create all tables in the database
+# Safely create all tables if they don't exist
 Base.metadata.create_all(engine)
