@@ -108,7 +108,20 @@ def planter_menu():
             planter = Planter.get_by_id(planter_id)
             if planter:
                 name = input(f"Name [{planter.name}]: ") or planter.name
-                planter.update(name=name)
+                location = input(f"Location [{planter.location}]: ") or planter.location
+                contact_info = input(f"Contact Info [{planter.contact_info}]: ") or planter.contact_info
+                plant_type = input(f"Plant Type [{planter.plant_type}]: ") or planter.plant_type
+                experience_months = safe_input(f"Experience Months [{planter.experience_months}]: ", int) or planter.experience_months
+                farm_size = input(f"Farm Size [{planter.farm_size}]: ") or planter.farm_size
+
+                planter.update(
+                    name=name,
+                    location=location,
+                    contact_info=contact_info,
+                    plant_type=plant_type,
+                    experience_months=experience_months,
+                    farm_size=farm_size
+                )
                 print("✅ Updated successfully!")
             else:
                 print("❌ Not found.")
@@ -127,6 +140,7 @@ def planter_menu():
 
         elif choice == "0":
             break
+
         else:
             print("❌ Invalid choice.")
 
@@ -175,7 +189,16 @@ def plant_menu():
             plant = Plant.get_by_id(pid)
             if plant:
                 name = input(f"Name [{plant.name}]: ") or plant.name
-                plant.update(name=name)
+                species = input(f"Species [{plant.species}]: ") or plant.species
+                age_months = safe_input(f"Age in months [{plant.age_months}]: ", int) or plant.age_months
+                health_status = input(f"Health Status [{plant.health_status}]: ") or plant.health_status
+
+                plant.update(
+                    name=name,
+                    species=species,
+                    age_months=age_months,
+                    health_status=health_status
+                )
                 print("✅ Plant updated!")
             else:
                 print("❌ Plant not found.")
@@ -226,15 +249,27 @@ def site_menu():
                 print("📭 No sites found.")
             else:
                 table = [[s.id, s.name, s.location, s.size, s.soil_type] for s in sites]
-                print(tabulate(table, headers=["ID", "Name", "Location", "Size", "Soil Type"],
-                               tablefmt="fancy_grid"))
+                print(tabulate(
+                    table,
+                    headers=["ID", "Name", "Location", "Size", "Soil Type"],
+                    tablefmt="fancy_grid"
+                ))
 
         elif choice == "3":
             sid = safe_input("Enter Site ID to update: ", int)
             site = Site.get_by_id(sid)
             if site:
                 name = input(f"Name [{site.name}]: ") or site.name
-                site.update(name=name)
+                location = input(f"Location [{site.location}]: ") or site.location
+                size = input(f"Size [{site.size}]: ") or site.size
+                soil_type = input(f"Soil Type [{site.soil_type}]: ") or site.soil_type
+
+                site.update(
+                    name=name,
+                    location=location,
+                    size=size,
+                    soil_type=soil_type
+                )
                 print("✅ Site updated!")
             else:
                 print("❌ Site not found.")
@@ -253,6 +288,7 @@ def site_menu():
 
         elif choice == "0":
             break
+
         else:
             print("❌ Invalid choice.")
 
@@ -283,7 +319,6 @@ def harvest_menu():
                 print("❌ Invalid Plant ID.")
                 continue
 
-            # Safe float input for quantity
             while True:
                 try:
                     quantity = float(input("Enter quantity harvested: "))
@@ -309,12 +344,16 @@ def harvest_menu():
             harvest = Harvest.get_by_id(hid)
             if harvest:
                 quantity_input = input(f"Quantity [{harvest.quantity}]: ").strip()
-                unit_input = input(f"Unit [{harvest.unit}]: ").strip()
-
                 quantity = float(quantity_input) if quantity_input else harvest.quantity
-                unit = unit_input if unit_input else harvest.unit
 
-                harvest.update(quantity=quantity, unit=unit)
+                unit = input(f"Unit [{harvest.unit}]: ") or harvest.unit
+                date = input(f"Date [{harvest.date}]: ") or str(harvest.date)
+
+                harvest.update(
+                    quantity=quantity,
+                    unit=unit,
+                    date=date
+                )
                 print("✅ Harvest updated!")
             else:
                 print("❌ Harvest not found.")
@@ -381,8 +420,14 @@ def activity_menu():
             aid = safe_input("Enter Activity ID to update: ", int)
             act = Activity.get_by_id(session, aid)
             if act:
-                desc = input(f"Description [{act.description}]: ") or act.description
-                act.update(session, description=desc)
+                description = input(f"Description [{act.description}]: ") or act.description
+                timestamp = input(f"Timestamp [{act.timestamp}]: ") or str(act.timestamp)
+
+                act.update(
+                    session,
+                    description=description,
+                    timestamp=timestamp
+                )
                 print("✅ Activity updated!")
             else:
                 print("❌ Activity not found.")
@@ -401,6 +446,7 @@ def activity_menu():
 
         elif choice == "0":
             break
+
         else:
             print("❌ Invalid choice. Try again.")
 
