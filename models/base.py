@@ -1,16 +1,17 @@
-# This handles the database setup (the engine, session, and Base class)
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Create SQLite database
-engine = create_engine("sqlite:///database/plantbase.db")
+# Database path
+DB_PATH = os.path.join(os.path.dirname(__file__), "..", "database", "plantbase.db")
+DB_PATH = os.path.abspath(DB_PATH)
 
-# This is the session that will be used to interact with the database
+# Engine and session
+engine = create_engine(f"sqlite:///plantbase.db", echo=False)  # echo=True for debug
+
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# This is the base class for all our models
+# Base declarative class
 Base = declarative_base()
-
-
