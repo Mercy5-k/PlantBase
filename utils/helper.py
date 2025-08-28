@@ -1,19 +1,23 @@
 # helper.py
 import textwrap
 from tabulate import tabulate
+import shutil
 
-def wrap_text(text, width=15):
+def wrap_text(text, width=None):
     """Wrap long text for nicer table display."""
+    if width is None:
+        terminal_width = shutil.get_terminal_size((80, 20)).columns
+        width = max(10, (terminal_width - 5) // 10)
     return textwrap.fill(str(text), width=width)
 
-def print_table(data, headers, title=None, width=15):
+def print_table(data, headers, title=None, width=None):
     """
     Utility function to display tabular data nicely using tabulate.
     - data: list of lists (rows)
     - headers: list of column names
     - title: optional title string
+    - width: max column width (auto-calculated if None)
     """
-    # Wrap all text in the data for consistent formatting
     wrapped_data = [
         [wrap_text(cell, width=width) for cell in row]
         for row in data
@@ -41,7 +45,6 @@ def get_int_input(prompt, default=None):
         if val.isdigit():
             return int(val)
         print("❌ Please enter a valid number.")
-
 
 def confirm_action(prompt="Are you sure? (y/n): "):
     """
