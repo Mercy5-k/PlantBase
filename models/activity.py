@@ -8,8 +8,7 @@ class Activity(Base):
 
     id = Column(Integer, primary_key=True)
     description = Column(String, nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow)  # Use UTC to avoid timezone issues
-
+    timestamp = Column(DateTime, default=datetime.utcnow)
     plant_id = Column(Integer, ForeignKey("plants.id"))
     plant = relationship("Plant", back_populates="activities")
 
@@ -18,7 +17,6 @@ class Activity(Base):
 
     @classmethod
     def create(cls, session, description, plant_id):
-        """Create a new activity linked to a plant"""
         activity = cls(description=description, plant_id=plant_id)
         session.add(activity)
         session.commit()
@@ -26,22 +24,21 @@ class Activity(Base):
 
     @classmethod
     def get_all(cls, session):
-        """Return all activities"""
         return session.query(cls).all()
 
     @classmethod
     def get_by_id(cls, session, activity_id):
-        """Return an activity by ID"""
         return session.get(cls, activity_id)
 
-    def update(self, session, description=None):
-        """Update the description of the activity"""
-        if description:
-            self.description = description
+    def update(self, session, **kwargs):
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                if key == "timestamp" and isinstance(value, str):
+                    value = datetime.fromisoformat(value)
+                setattr(self, key, value)
         session.commit()
         return self
 
     def delete(self, session):
-        """Delete this activity"""
         session.delete(self)
         session.commit()
