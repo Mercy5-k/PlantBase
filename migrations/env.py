@@ -18,7 +18,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from models.base import Base  # Make sure this is the actual location of your Base
+from models.base import Base 
 from models.planter import Planter
 from models.site import Site
 from models.plant import Plant
