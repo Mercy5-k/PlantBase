@@ -42,12 +42,12 @@ class Planter(Base):
         return session.get(cls, planter_id)
 
     def update(self, **kwargs):
-        """Update planter attributes and commit."""
-        for k, v in kwargs.items():
-            setattr(self, k, v)
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
         session.commit()
         return self
-
+    
     def delete(self):
         """Delete planter from the database."""
         session.delete(self)
