@@ -9,7 +9,6 @@ from models.harvest import Harvest
 from models.activity import Activity
 from utils.helper import wrap_text
 
-# Helper functions
 def safe_input(prompt, type_=int):
     """Get validated input of given type."""
     while True:
@@ -22,12 +21,10 @@ def confirm_action(message):
     """Confirm before performing a destructive action."""
     return input(f"{message} (y/n): ").strip().lower() == "y"
 
-# Greeting
 def greet():
     print("\n🌱 Welcome to PlantBase CLI 🌱")
     print("Manage your plants, planters, sites, harvests, and activities easily!\n")
 
-# Main Menu
 def main_menu():
     greet()
     while True:
@@ -57,7 +54,6 @@ def main_menu():
         else:
             print("❌ Invalid choice, try again.")
 
-# Planter Menu
 def planter_menu():
     while True:
         print("\n👨‍🌾 Planter Menu")
@@ -107,24 +103,18 @@ def planter_menu():
             planter_id = safe_input("Enter ID to update: ", int)
             planter = Planter.get_by_id(planter_id)
             if planter:
-                name = input(f"Name [{planter.name}]: ") or planter.name
-                location = input(f"Location [{planter.location}]: ") or planter.location
-                contact_info = input(f"Contact Info [{planter.contact_info}]: ") or planter.contact_info
-                plant_type = input(f"Plant Type [{planter.plant_type}]: ") or planter.plant_type
-                experience_months = safe_input(f"Experience Months [{planter.experience_months}]: ", int) or planter.experience_months
-                farm_size = input(f"Farm Size [{planter.farm_size}]: ") or planter.farm_size
-
-                planter.update(
-                    name=name,
-                    location=location,
-                    contact_info=contact_info,
-                    plant_type=plant_type,
-                    experience_months=experience_months,
-                    farm_size=farm_size
-                )
-                print("✅ Updated successfully!")
+                updates = {
+                    "name": input(f"Name [{planter.name}]: ") or planter.name,
+                    "location": input(f"Location [{planter.location}]: ") or planter.location,
+                    "contact_info": input(f"Contact Info [{planter.contact_info}]: ") or planter.contact_info,
+                    "plant_type": input(f"Plant Type [{planter.plant_type}]: ") or planter.plant_type,
+                    "experience_months": safe_input(f"Experience Months [{planter.experience_months}]: ", int) or planter.experience_months,
+                    "farm_size": input(f"Farm Size [{planter.farm_size}]: ") or planter.farm_size
+                }
+                planter.update(**updates)
+                print("✅ Planter updated successfully!")
             else:
-                print("❌ Not found.")
+                print("❌ Planter not found.")
 
         elif choice == "4":
             planter_id = safe_input("Enter ID to delete: ", int)
@@ -140,11 +130,9 @@ def planter_menu():
 
         elif choice == "0":
             break
-
         else:
             print("❌ Invalid choice.")
 
-# Plant Menu
 def plant_menu():
     while True:
         print("\n🌿 Plant Menu")
@@ -188,18 +176,16 @@ def plant_menu():
             pid = safe_input("Enter Plant ID to update: ", int)
             plant = Plant.get_by_id(pid)
             if plant:
-                name = input(f"Name [{plant.name}]: ") or plant.name
-                species = input(f"Species [{plant.species}]: ") or plant.species
-                age_months = safe_input(f"Age in months [{plant.age_months}]: ", int) or plant.age_months
-                health_status = input(f"Health Status [{plant.health_status}]: ") or plant.health_status
-
-                plant.update(
-                    name=name,
-                    species=species,
-                    age_months=age_months,
-                    health_status=health_status
-                )
-                print("✅ Plant updated!")
+                updates = {
+                    "name": input(f"Name [{plant.name}]: ") or plant.name,
+                    "species": input(f"Species [{plant.species}]: ") or plant.species,
+                    "age_months": safe_input(f"Age in months [{plant.age_months}]: ", int) or plant.age_months,
+                    "health_status": input(f"Health Status [{plant.health_status}]: ") or plant.health_status,
+                    "site_id": safe_input(f"Site ID [{plant.site_id}]: ", int) or plant.site_id,
+                    "planter_id": safe_input(f"Planter ID [{plant.planter_id}]: ", int) or plant.planter_id
+                }
+                plant.update(**updates)
+                print("✅ Plant updated successfully!")
             else:
                 print("❌ Plant not found.")
 
@@ -220,7 +206,6 @@ def plant_menu():
         else:
             print("❌ Invalid choice.")
 
-# Site Menu
 def site_menu():
     while True:
         print("\n📍 Site Menu")
@@ -259,18 +244,14 @@ def site_menu():
             sid = safe_input("Enter Site ID to update: ", int)
             site = Site.get_by_id(sid)
             if site:
-                name = input(f"Name [{site.name}]: ") or site.name
-                location = input(f"Location [{site.location}]: ") or site.location
-                size = input(f"Size [{site.size}]: ") or site.size
-                soil_type = input(f"Soil Type [{site.soil_type}]: ") or site.soil_type
-
-                site.update(
-                    name=name,
-                    location=location,
-                    size=size,
-                    soil_type=soil_type
-                )
-                print("✅ Site updated!")
+                updates = {
+                    "name": input(f"Name [{site.name}]: ") or site.name,
+                    "location": input(f"Location [{site.location}]: ") or site.location,
+                    "size": input(f"Size [{site.size}]: ") or site.size,
+                    "soil_type": input(f"Soil Type [{site.soil_type}]: ") or site.soil_type
+                }
+                site.update(**updates)
+                print("✅ Site updated successfully!")
             else:
                 print("❌ Site not found.")
 
@@ -288,11 +269,9 @@ def site_menu():
 
         elif choice == "0":
             break
-
         else:
             print("❌ Invalid choice.")
 
-# Harvest Menu
 def harvest_menu():
     while True:
         print("\n🌾 Harvest Menu")
@@ -343,18 +322,13 @@ def harvest_menu():
             hid = safe_input("Enter Harvest ID to update: ", int)
             harvest = Harvest.get_by_id(hid)
             if harvest:
-                quantity_input = input(f"Quantity [{harvest.quantity}]: ").strip()
-                quantity = float(quantity_input) if quantity_input else harvest.quantity
-
-                unit = input(f"Unit [{harvest.unit}]: ") or harvest.unit
-                date = input(f"Date [{harvest.date}]: ") or str(harvest.date)
-
-                harvest.update(
-                    quantity=quantity,
-                    unit=unit,
-                    date=date
-                )
-                print("✅ Harvest updated!")
+                updates = {
+                    "quantity": (input(f"Quantity [{harvest.quantity}]: ") or harvest.quantity),
+                    "unit": input(f"Unit [{harvest.unit}]: ") or harvest.unit,
+                    "date": input(f"Date [{harvest.date}]: ") or str(harvest.date)
+                }
+                harvest.update(**updates)
+                print("✅ Harvest updated successfully!")
             else:
                 print("❌ Harvest not found.")
 
@@ -375,7 +349,6 @@ def harvest_menu():
         else:
             print("❌ Invalid choice.")
 
-# Activity Menu
 def activity_menu():
     while True:
         print("\n📝 Activity Menu")
@@ -420,15 +393,12 @@ def activity_menu():
             aid = safe_input("Enter Activity ID to update: ", int)
             act = Activity.get_by_id(session, aid)
             if act:
-                description = input(f"Description [{act.description}]: ") or act.description
-                timestamp = input(f"Timestamp [{act.timestamp}]: ") or str(act.timestamp)
-
-                act.update(
-                    session,
-                    description=description,
-                    timestamp=timestamp
-                )
-                print("✅ Activity updated!")
+                updates = {
+                    "description": input(f"Description [{act.description}]: ") or act.description,
+                    "timestamp": input(f"Timestamp [{act.timestamp}]: ") or str(act.timestamp)
+                }
+                act.update(session, **updates)
+                print("✅ Activity updated successfully!")
             else:
                 print("❌ Activity not found.")
 
@@ -446,7 +416,6 @@ def activity_menu():
 
         elif choice == "0":
             break
-
         else:
             print("❌ Invalid choice. Try again.")
 
