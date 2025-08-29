@@ -1,5 +1,3 @@
-"""Unified CLI Application for PlantBase 🌳"""
-
 from tabulate import tabulate
 from models.base import session
 from models.planter import Planter
