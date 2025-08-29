@@ -38,8 +38,9 @@ class Plant(Base):
         return session.get(cls, plant_id)
 
     def update(self, **kwargs):
-        for k, v in kwargs.items():
-            setattr(self, k, v)
+        for key, value in kwargs.items():
+            if hasattr(self, key) and value is not None:
+                setattr(self, key, value)
         session.commit()
         return self
 
