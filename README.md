@@ -178,7 +178,6 @@ This helps simulate **real-world usage** for demonstration and testing.
 - **Python 3.8+**  
 - **Pipenv** (for dependency management)  
 - **SQLAlchemy** (ORM for database management)  
-- **Faker** (data seed)  
 - **Tabulate** (for clean tabular CLI output)  
 
 ---
