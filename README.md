@@ -65,35 +65,35 @@ Each section, lets you:
 ##  Features
 ---
 
-- 👨‍🌾 **Planters Management**  
+-  **Planters Management**  
   - Add, view, update, and delete planter records.  
   - Store details such as name, location, contact info, experience, and farm size.  
 
-- 🌿 **Plants Management**  
+-  **Plants Management**  
   - Manage plant details: name, species, age (months), and health status.  
   - Link each plant to a **planter** and a **site**.  
 
-- 📍 **Sites Management**  
+-  **Sites Management**  
   - Register and manage farm sites with size, location, and soil type.  
   - Assign multiple plants to a single site.  
 
-- 🌾 **Harvest Records**  
+-  **Harvest Records**  
   - Record harvests linked to plants.  
   - Track yield amounts and harvest dates.  
 
-- 📝 **Activities Log**  
+-  **Activities Log**  
   - Keep track of farm activities such as watering, weeding, spraying, or fertilizing.  
   - Attach each activity to a specific plant for easy monitoring.  
 
-- ✅ **Safe Updates**  
+-  **Safe Updates**  
   - Update non-critical fields freely.  
   - Critical IDs (`plant_id`, `site_id`, `planter_id`) are **protected** from accidental changes.  
 
-- 📊 **Pretty Tables**  
+-  **Pretty Tables**  
   - All data displayed in **clear, tabular format** using `tabulate`.  
   - Easy-to-read overview of plants, planters, sites, harvests, and activities.  
 
-- 🧑‍💻 **User-Friendly CLI**  
+-  **User-Friendly CLI**  
   - Interactive text-based menus.  
   - Simple navigation with validation and confirmation prompts.  
 
@@ -113,7 +113,7 @@ Each section, lets you:
 ##  Models & Relationships
 ---
 
-### 👨‍🌾 Planter
+###  Planter
 Represents a **farmer or caretaker** responsible for plants.  
 - **Fields:** `id`, `name`, `location`, `contact_info`, `plant_type`, `experience_months`, `farm_size`, `created_at`  
 - **Relationships:**  
@@ -121,7 +121,7 @@ Represents a **farmer or caretaker** responsible for plants.
 
 ---
 
-### 🌿 Plant
+###  Plant
 Represents a **specific crop, flower, or tree** being grown.  
 - **Fields:** `id`, `name`, `species`, `age_months`, `health_status`, `site_id`, `planter_id`  
 - **Relationships:**  
@@ -130,7 +130,7 @@ Represents a **specific crop, flower, or tree** being grown.
 
 ---
 
-### 📍 Site
+###  Site
 Represents the **farm location** where plants are grown.  
 - **Fields:** `id`, `name`, `location`, `size`, `soil_type`  
 - **Relationships:**  
@@ -138,7 +138,7 @@ Represents the **farm location** where plants are grown.
 
 ---
 
-### 🌾 Harvest
+###  Harvest
 Represents the **produce collected** from a plant.  
 - **Fields:** `id`, `plant_id`, `quantity`, `date`, `notes`  
 - **Relationships:**  
@@ -146,7 +146,7 @@ Represents the **produce collected** from a plant.
 
 ---
 
-### 📝 Activity
+###  Activity
 Represents **farm activities** done on plants (watering, weeding, spraying, etc.).  
 - **Fields:** `id`, `plant_id`, `description`, `date`  
 - **Relationships:**  
@@ -154,23 +154,11 @@ Represents **farm activities** done on plants (watering, weeding, spraying, etc.
 
 ---
 
-### 🔗 Relationship Overview
+###  Relationship Overview
 - **Planter → Plant** (One planter can manage many plants)  
 - **Site → Plant** (One site can host many plants)  
 - **Plant → Harvest** (One plant can produce many harvests)  
 - **Plant → Activity** (One plant can have many activities)
-
-## Seeding Data
----
-The project includes a **seed script** that generates realistic Kenyan farming data.
-
-- **Planters:** 15–30 (with Kenyan names, locations, and contact details)  
-- **Sites:** 4–14 (with realistic farm sizes and soil types)  
-- **Plants:** 6–12 (linked to planters and sites, with varied species & ages)  
-- **Harvests:** 7–15 (with quantities, dates, and notes)  
-- **Activities:** 5- 10 (watering, weeding, spraying, etc. on plants)  
-
-This helps simulate **real-world usage** for demonstration and testing.
 
 ---
 
@@ -196,7 +184,7 @@ Created by **Mercy Kinya**
 
 ---
 
-## 📄 License
+##  License
 MIT License  
 Copyright (c) 2025 **Mercy Kinya**
 
